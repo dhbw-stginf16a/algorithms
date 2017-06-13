@@ -2,6 +2,7 @@
 
 #include "test_sorts.h"
 #include "test_fibonacci.h"
+#include "test_factorial.h"
 
 int main(void) {
     UNITY_BEGIN();
@@ -18,7 +19,10 @@ int main(void) {
     RUN_TEST(test_natural_mergesort);
     RUN_TEST(test_recursive_mergesort);
 
-    RUN_TEST(test_recursive_fibonacci);
+    RUN_TEST(test_fib_recursive);
+    RUN_TEST(test_fib_iterative);
+
+    RUN_TEST(test_fact);
 
     return UNITY_END();
 }

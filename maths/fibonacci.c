@@ -1,3 +1,5 @@
+#include "fibonacci.h"
+
 int fib_recursive(int n) {
     if (n == 0 || n == 1) {
         return 1;

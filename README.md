@@ -4,6 +4,8 @@ Below is a list of all algorithms.
 Those with a tick are implemented and tested.
 Other may be implemented but lack a unit test.
 
+Untested code may not work or compile at all - so be careful.
+
 ## Running
 To run the tests execute `make && ./test`.
 
