@@ -5,7 +5,7 @@ void merge(int a[], int low, int mid, int high, int aux[]);
 void sort(int a[], int low, int high, int aux[]);
 
 /**
- * Do lg n passes of pariwise merges.
+ * Do lg n passes of pairwise merges.
  */
 void natural_mergesort(int a[], int n) {
     int *aux = (int *) malloc(n * sizeof(int)); // allocate aux array ONCE
@@ -17,7 +17,9 @@ void natural_mergesort(int a[], int n) {
         low = 0;
         while (low < n) {  // low: next pair of strings
             size1 = 1;
-            while (low + size1 < n && a[low + size1 - 1] <= a[low + size1]) {
+            while (
+                    low + size1 < n
+                    && a[low + size1 - 1] <= a[low + size1]) {
                 size1++;  // length of first string
             }
             size2 = 1;
