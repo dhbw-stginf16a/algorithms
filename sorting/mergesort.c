@@ -1,11 +1,16 @@
 #include <stdlib.h>
+#include <stdio.h>
+
+extern int index_comps;
+extern int value_comps;
+extern int array_accesses;
 
 int smaller(int x, int y);
 void merge(int a[], int low, int mid, int high, int aux[]);
 void sort(int a[], int low, int high, int aux[]);
 
 /**
- * Do lg n passes of pariwise merges.
+ * Do lg n passes of pairwise merges.
  */
 void natural_mergesort(int a[], int n) {
     int *aux = (int *) malloc(n * sizeof(int)); // allocate aux array ONCE
@@ -49,6 +54,7 @@ void recursive_mergesort(int a[], int len) {
 void sort(int a[], int low, int high, int aux[]) {
     int mid;
     if (high > low) {
+        index_comps++;
         mid = (high + low) / 2;
         sort(a, low, mid, aux);     // left
         sort(a, mid+1, high, aux);  // right
@@ -61,16 +67,29 @@ void merge(int a[], int low, int mid, int high, int aux[]) {
     int j = mid + 1;
     int k;
 
-    for (k = low; k <= high; k++)  // Copy a[low..high] to aux[low..high].
+    for (k = low; k <= high; k++) {  // Copy a[low..high] to aux[low..high].
         aux[k] = a[k];
+        array_accesses += 2;
+    }
+
     for (k = low; k <= high; k++) {  // Merge back to a[low..high].
-        if (i > mid)  // end of 1st half
+        if (i > mid) {  // end of 1st half
+            index_comps++;
             a[k] = aux[j++]; // rest of 2nd half
-        else if (j > high)  // end of 2nd half
+            array_accesses += 2;
+        } else if (j > high) {  // end of 2nd half
+            index_comps += 2;
             a[k] = aux[i++]; // rest of 1st half
-        else if (aux[j] < aux[i]) // compare values
+            array_accesses += 2;
+        } else if (aux[j] < aux[i]) { // compare values
+            array_accesses += 2;
+            value_comps++;
             a[k] = aux[j++];
-        else
+            array_accesses += 2;
+        } else {
+            array_accesses += 2;
             a[k] = aux[i++];
+            array_accesses += 2;
+        }
     }
 }

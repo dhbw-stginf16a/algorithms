@@ -1,6 +1,10 @@
 #include "../lib/array.h"
 #include "../lib/shuffle.h"
 
+extern int index_comps;
+extern int value_comps;
+extern int array_accesses;
+
 void len_quicksort(int a[], int len, int medianPivot);
 void quicksort(int a[], int from, int to, int medianPivot);
 int getMedian(int array[], int a, int b, int c);
@@ -43,6 +47,7 @@ void quicksort(int a[], int from, int to, int medianPivot) {
     int i, new_val, pivot;
 
     if (from < to) {
+        index_comps++;
         // choose the median as pivot
         if (medianPivot) {
             int len = from - to;
@@ -51,10 +56,16 @@ void quicksort(int a[], int from, int to, int medianPivot) {
         pivot = from;
         for (i = from + 1; i <= to; i++) {
             new_val = a[i];
+            array_accesses++;
             if (new_val < a[pivot]) {
+                array_accesses++;
+                value_comps++;
                 a[i] = a[pivot+1];
+                array_accesses += 2;
                 a[pivot+1] = a[pivot];
+                array_accesses += 2;
                 a[pivot] = new_val;
+                array_accesses++;
                 pivot++;
             }
         }
@@ -72,19 +83,35 @@ void quicksort(int a[], int from, int to, int medianPivot) {
  */
 int getMedian(int array[], int a, int b, int c) {
     if (array[a] < array[c]) {
+        array_accesses += 2;
+        value_comps++;
         if (array[b] > array[c]) {
+            array_accesses += 2;
+            value_comps++;
             return c;
         } else if (array[b] < array[a]) {
+            array_accesses += 4;
+            value_comps += 2;
             return a;
         } else {
+            array_accesses += 4;
+            value_comps += 2;
             return b;
         }
     } else {
+        array_accesses += 2;
+        value_comps++;
         if (array[b] < array[c]) {
+            array_accesses += 2;
+            value_comps++;
             return b;
         } else if (array[b] > array[a]) {
+            array_accesses += 4;
+            value_comps += 2;
             return a;
         } else {
+            array_accesses += 4;
+            value_comps += 2;
             return b;
         }
     }

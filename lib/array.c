@@ -4,6 +4,8 @@
 #include "array.h"
 #include "shuffle.h"
 
+extern int array_accesses;
+
 /**
  * Swap elements of a at indices left and right.
  */
@@ -11,6 +13,7 @@ void swap(int a[], int left, int right) {
     int left_value = a[left];
     a[left] = a[right];
     a[right] = left_value;
+    array_accesses += 4;
 }
 
 /**
