@@ -1,2 +1,2 @@
 all:
-	gcc tests/* lib/* sorting/* maths/* -o test
+	gcc tests/* lib/* sorting/* maths/* search/* -o test
