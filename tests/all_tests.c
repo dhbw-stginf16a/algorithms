@@ -4,6 +4,7 @@
 #include "test_fibonacci.h"
 #include "test_factorial.h"
 #include "test_search.h"
+#include "test_trees.h"
 
 int main(void) {
     UNITY_BEGIN();
@@ -25,10 +26,12 @@ int main(void) {
 
     RUN_TEST(test_binary_search);
     RUN_TEST(test_linear_search);
-    RUN_TEST(test_bruteforce_match);
-    RUN_TEST(test_boyermoore_match);
+    //RUN_TEST(test_bruteforce_match);
+    //RUN_TEST(test_boyermoore_match);
 
     RUN_TEST(test_fact);
+
+    RUN_TEST(test_avl);
 
     return UNITY_END();
 }
