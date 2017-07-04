@@ -4,23 +4,40 @@
 #include "../datastructures/avl_c/tree.h"
 #include "../datastructures/avl_c/list.h"
 
-void test_avl(void) {
+void print_test_tree(struct Tree *(*insert_alg)(struct Tree *, int)) {
     struct List *list;
     int values[] = {
-        6, 3, 4, 8, 7, 9, 5, 6, 8, 10, 11, 12
+        //6, 3, 4, 8, 7, 9, 5, 6, 8, 10, 11, 12
+        200,300,400,500,350,100,125,50,60,70,80,150,180,170,140
     };
-    struct Tree *search_tree;
-    //search_tree = from_array(values, sizeof(values) / sizeof(int), insert);
-    //list = inorder(search_tree);
-    //print_list(list);
-    //print_tree(search_tree);
+    struct Tree *tree;
+    tree = from_array(values, sizeof(values) / sizeof(int), insert_alg);
+    list = inorder(tree);
+    print_list(list);
+    print_tree(tree, 0);
+}
 
+void print_balancing(void) {
     struct Tree *avl_tree;
-    int simple_vals[] = {2, 1, 4, 3, 5};
+    struct List *list;
+
+    //int simple_vals[] = {4, 2, 1, 5, 3}; // LL
+    //int simple_vals[] = {2, 1, 4, 3, 5}; // RR
+    //int simple_vals[] = {6, 2, 1, 4, 3, 5, 7}; // LR
+    int simple_vals[] = {2, 1, 6, 4, 3, 5, 7}; // RL
     avl_tree = from_array(simple_vals, sizeof(simple_vals) / sizeof(int), insert);
-    //list = inorder(avl_tree);
-    //print_list(list);
-    print_tree(avl_tree);
+    print_tree(avl_tree, 0);
+    avl_tree = balance_rl(avl_tree);
+    print_tree(avl_tree, 0);
+
+    list = inorder(avl_tree);
+    print_list(list);
+}
+
+void test_avl(void) {
+    print_test_tree(avl_insert);
+    //print_balancing();
+
 
 //    // Test random values
 //    struct List *input = get_singleton(0);

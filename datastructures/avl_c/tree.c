@@ -93,12 +93,12 @@ void show_trunks(struct Trunk *p) {
 	printf("%s", p->str);
 }
 
-void show_tree(struct Tree *root, struct Trunk *prev, int is_left) {
+void show_tree(struct Tree *root, struct Trunk *prev, int is_left, int balance) {
 	if (root == NULL) return;
 
 	struct Trunk this_disp = { prev, "    " };
 	char *prev_str = this_disp.str;
-	show_tree(root->left, &this_disp, 1);
+	show_tree(root->left, &this_disp, 1, balance);
 
 	if (!prev)
 		this_disp.str = "────";
@@ -112,17 +112,21 @@ void show_tree(struct Tree *root, struct Trunk *prev, int is_left) {
 
 	show_trunks(&this_disp);
 
-    int left_depth = depth(root->left);
-    int right_depth = depth(root->right);
-	printf(RED " %d " RESET "(%d - %d = %d)\n", root->value, left_depth, right_depth, left_depth - right_depth);
+    if (balance) {
+        int left_depth = depth(root->left);
+        int right_depth = depth(root->right);
+        printf(RED " %d " RESET "(%d - %d = %d)\n", root->value, left_depth, right_depth, left_depth - right_depth);
+    } else {
+	    printf(RED " %d\n" RESET, root->value);
+    }
 
 	if (prev) prev->str = prev_str;
 	this_disp.str = "    │";
 
-	show_tree(root->right, &this_disp, 0);
+	show_tree(root->right, &this_disp, 0, balance);
 	if (!prev) puts("");
 }
 
-void print_tree(struct Tree *root) {
-    show_tree(root, 0, 0);
+void print_tree(struct Tree *root, int balance) {
+    show_tree(root, 0, 0, balance);
 }
