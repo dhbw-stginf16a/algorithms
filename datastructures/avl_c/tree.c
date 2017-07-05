@@ -34,6 +34,7 @@ struct Tree *from_array(
     struct Tree *root = empty();
     for (int i = 0; i < len; ++i) {
         root = (*insert_alg)(root, array[i]);
+        print_tree(root, 2);
     }
     return root;
 }
@@ -112,7 +113,17 @@ void show_tree(struct Tree *root, struct Trunk *prev, int is_left, int balance) 
 
 	show_trunks(&this_disp);
 
-    if (balance) {
+    if (balance == 2) {
+        int left_depth = depth(root->left);
+        int right_depth = depth(root->right);
+        char balance_indicator = 'E';
+        if (left_depth < right_depth) {
+            balance_indicator = 'R';
+        } else if (left_depth > right_depth){
+            balance_indicator = 'L';
+        }
+        printf(RED " %d " RESET "%c\n", root->value, balance_indicator);
+    } else if (balance) {
         int left_depth = depth(root->left);
         int right_depth = depth(root->right);
         printf(RED " %d " RESET "(%d - %d = %d)\n", root->value, left_depth, right_depth, left_depth - right_depth);

@@ -18,7 +18,7 @@ struct Tree *balance_ll(struct Tree *root) {
     clone->left = clone_tree(root->left->left);
     clone->right = clone_tree(root);
     clone->right->left = clone_tree(root->left->right);
-    printf("LL: root: %d cloned: %d\n", root->value, clone->value);
+    //printf("LL: root: %d cloned: %d\n", root->value, clone->value);
 
     return clone;
 }
@@ -30,7 +30,7 @@ struct Tree *balance_lr(struct Tree *root) {
     clone->right = clone_tree(root);
     clone->right->left = clone_tree(root->left->right->right);
     clone->left->right = clone_tree(root->left->right->left);
-    printf("LR: root: %d cloned: %d\n", root->value, clone->value);
+    //printf("LR: root: %d cloned: %d\n", root->value, clone->value);
 
     return clone;
 }
@@ -43,7 +43,7 @@ struct Tree *balance_rl(struct Tree *root) {
     clone->left = clone_tree(root);
     clone->left->right = clone_tree(root->right->left->left);
     clone->right->left = clone_tree(root->right->left->right);
-    printf("RL: root: %d cloned: %d\n", root->value, clone->value);
+    //printf("RL: root: %d cloned: %d\n", root->value, clone->value);
 
     return clone;
 }
@@ -56,7 +56,7 @@ struct Tree *balance_rr(struct Tree *root) {
     clone->right = clone_tree(root->right->right);
     clone->left  = clone_tree(root);
     clone->left->right = clone_tree(root->right->left);
-    printf("RR: root: %d cloned: %d\n", root->value, clone->value);
+    //printf("RR: root: %d cloned: %d\n", root->value, clone->value);
 
     return clone;
 }

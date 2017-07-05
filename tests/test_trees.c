@@ -8,13 +8,15 @@ void print_test_tree(struct Tree *(*insert_alg)(struct Tree *, int)) {
     struct List *list;
     int values[] = {
         //6, 3, 4, 8, 7, 9, 5, 6, 8, 10, 11, 12
-        200,300,400,500,350,100,125,50,60,70,80,150,180,170,140
+        200,300,400,500,350,100,125,50,60,70,80,150,180,170,140,
+        //201,304,404,580,359,106,121,51,10,40,87,1507184,174,144,
+        //220,330,460,590,454,140,115,22,61,71,82,122,155,171,141
     };
     struct Tree *tree;
     tree = from_array(values, sizeof(values) / sizeof(int), insert_alg);
     list = inorder(tree);
     print_list(list);
-    print_tree(tree, 0);
+    print_tree(tree, 1);
 }
 
 void print_balancing(void) {
