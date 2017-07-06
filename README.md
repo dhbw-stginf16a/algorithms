@@ -7,7 +7,9 @@ Other may be implemented but lack a unit test.
 Untested code may not work or compile at all - so be careful.
 
 ## Running
-To run the tests execute `make && ./test`.
+To run the tests execute `make test && ./test.out`.
+
+To print the AVL Tree exercise output execute `make avl && ./avl.out`.
 
 ## Algorithms
 
@@ -37,6 +39,7 @@ To run the tests execute `make && ./test`.
 - [ ] Queue
 - [ ] Linear Linked List
   - [ ] Ordered Linked List
+- [x] AVL Tree
   - [ ] Merge Sort
   - [ ] Stack
   - [ ] Queue

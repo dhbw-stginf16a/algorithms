@@ -1,8 +1,10 @@
+#include <string.h>
+
 /**
  * Returns index of target string in the given list,
  * or returns -1 if target string is not found.
  */
-int binarySearch(char *list[ ], char target[ ], int n) {
+int binary_search(char *list[], char target[], int n) {
     int start, end, middle;
     start = 0;
     end = n - 1;
@@ -17,4 +19,4 @@ int binarySearch(char *list[ ], char target[ ], int n) {
         }
     }  // end while
     return -1;
-}  // end binary searchAlgorit
+}  // end binary searchAlgorithm
