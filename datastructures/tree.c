@@ -34,7 +34,7 @@ struct Tree *from_array(
     struct Tree *root = empty();
     for (int i = 0; i < len; ++i) {
         root = (*insert_alg)(root, array[i]);
-        print_tree(root, 2);
+        //print_tree(root, 2);
     }
     return root;
 }
@@ -85,6 +85,20 @@ struct List *inorder(struct Tree *root) {
             get_singleton(root->value),
             inorder(root->right)
     );
+}
+
+int trees_equal(struct Tree *first, struct Tree *second) {
+    if (first == NULL && second == NULL) {
+        return 1;
+    } else if (first == NULL || second == NULL) {
+        return 0;
+    } else {
+        if (first->value == second->value) {
+            return trees_equal(first->left, second->left) && trees_equal(first->right, second->right);
+        } else {
+            return 0;
+        }
+    }
 }
 
 // -- printing
@@ -140,4 +154,75 @@ void show_tree(struct Tree *root, struct Trunk *prev, int is_left, int balance) 
 
 void print_tree(struct Tree *root, int balance) {
     show_tree(root, 0, 0, balance);
+}
+
+// https://stackoverflow.com/a/41105372/5932056
+#define space 4
+void draw_tree_hor2(struct Tree *tree, int depth, char *path, int right)
+{
+    // stopping condition
+    if (tree== NULL)
+        return;
+
+    // increase spacing
+    depth++;
+
+    // start with right node
+    draw_tree_hor2(tree->right, depth, path, 1);
+
+    // set | draw map
+    path[depth-2] = 0;
+
+    if(right)
+        path[depth-2] = 1;
+
+    if(tree->left)
+        path[depth-1] = 1;
+
+    // print root after spacing
+    printf("\n");
+
+    for(int i=0; i<depth-1; i++)
+    {
+      if(i == depth-2)
+          printf("+");
+      else if(path[i])
+          printf("|");
+      else
+          printf(" ");
+
+      for(int j=1; j<space; j++)
+      if(i < depth-2)
+          printf(" ");
+      else
+          printf("-");
+    }
+
+    printf("%d\n", tree->value);
+
+    // vertical spacers below
+    for(int i=0; i<depth; i++)
+    {
+      if(path[i])
+          printf("|");
+      else
+          printf(" ");
+
+      for(int j=1; j<space; j++)
+          printf(" ");
+    }
+
+    // go to left node
+    draw_tree_hor2(tree->left, depth, path, 0);
+}
+
+//primary fuction
+void draw_tree_hor(struct Tree *tree)
+{
+    // should check if we don't exceed this somehow..
+    char path[1024] = {};
+
+    //initial depth is 0
+    draw_tree_hor2(tree, 0, path, 0);
+    printf("\n");
 }

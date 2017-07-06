@@ -30,3 +30,4 @@ int depth(struct Tree *root);
 struct Tree *clone_tree(struct Tree *root);
 struct List *inorder(struct Tree *root);
 void print_tree(struct Tree *root, int balance);
+int trees_equal(struct Tree *first, struct Tree *second);

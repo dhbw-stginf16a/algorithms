@@ -1,99 +1,71 @@
 #include "../Unity/src/unity.h"
 
-#include "../datastructures/avl_c/avl_tree.h"
-#include "../datastructures/avl_c/tree.h"
-#include "../datastructures/avl_c/list.h"
+#include "../datastructures/avl_tree.h"
+#include "../datastructures/tree.h"
+#include "../datastructures/list.h"
 
-void print_test_tree(struct Tree *(*insert_alg)(struct Tree *, int)) {
-    struct List *list;
-    int values[] = {
-        //6, 3, 4, 8, 7, 9, 5, 6, 8, 10, 11, 12
-        200,300,400,500,350,100,125,50,60,70,80,150,180,170,140,
-        //201,304,404,580,359,106,121,51,10,40,87,1507184,174,144,
-        //220,330,460,590,454,140,115,22,61,71,82,122,155,171,141
-    };
-    struct Tree *tree;
-    tree = from_array(values, sizeof(values) / sizeof(int), insert_alg);
-    list = inorder(tree);
-    print_list(list);
-    print_tree(tree, 1);
+void test_rotation(struct Tree*(*rotate)(struct Tree *), int *values, int len) {
+    struct Tree *tree = from_array(values, len, insert);
+    //printf("before\n");
+    //print_tree(tree, 0);
+    tree = (*rotate)(tree);
+    //printf("after\n");
+    //print_tree(tree, 0);
+    TEST_ASSERT_TRUE(is_balanced(tree));
 }
 
-void print_balancing(void) {
+void test_balancing(void) {
     struct Tree *avl_tree;
     struct List *list;
 
-    //int simple_vals[] = {4, 2, 1, 5, 3}; // LL
-    //int simple_vals[] = {2, 1, 4, 3, 5}; // RR
-    //int simple_vals[] = {6, 2, 1, 4, 3, 5, 7}; // LR
-    int simple_vals[] = {2, 1, 6, 4, 3, 5, 7}; // RL
-    avl_tree = from_array(simple_vals, sizeof(simple_vals) / sizeof(int), insert);
-    print_tree(avl_tree, 0);
-    avl_tree = balance_rl(avl_tree);
-    print_tree(avl_tree, 0);
+    int left_left[] = {4, 2, 1, 5, 3};
+    test_rotation(balance_ll, left_left, 5);
 
-    list = inorder(avl_tree);
-    print_list(list);
+    int right_right[] = {2, 1, 4, 3, 5};
+    test_rotation(balance_rr, right_right, 5);
+
+    int left_right[] = {6, 2, 1, 4, 3, 5, 7};
+    test_rotation(balance_lr, left_right, 7);
+
+    int right_left[] = {2, 1, 6, 4, 3, 5, 7};
+    test_rotation(balance_rl, right_left, 7);
+}
+
+void test_balance_undo(void) {
+    struct Tree *before;
+    struct Tree *after;
+
+    // LL and then RR returns to original tree
+    int left_left[] = {4, 2, 1, 5, 3};
+    before = from_array(left_left, 5, insert);
+    after = balance_ll(before);
+    after = balance_rr(after);
+    TEST_ASSERT_TRUE(trees_equal(before, after));
+
+    // LR and RL bring it to the same tree
+    int left_right[] = {6, 2, 1, 4, 3, 5, 7};
+    before = from_array(left_right, 7, insert);
+    struct Tree *after_lr = balance_lr(before);
+
+    int right_left[] = {2, 1, 6, 4, 3, 5, 7};
+    before = from_array(right_left, 7, insert);
+    struct Tree *after_rl = balance_rl(before);
+    TEST_ASSERT_TRUE(trees_equal(after_lr, after_rl));
+}
+
+void test_exercise_tree(void) {
+    int bsl_values[] = {100, 60, 50, 70, 80, 300, 150, 125, 140, 180, 170, 200, 400, 350, 500};
+    int avl_values[] = {200,300,400,500,350,100,125,50,60,70,80,150,180,170,140};
+    struct Tree *bsl = from_array(bsl_values, 15, insert);
+    struct Tree *avl = from_array(avl_values, 15, avl_insert);
+
+    TEST_ASSERT_TRUE(trees_equal(bsl, avl));
+
+    TEST_ASSERT_TRUE(is_balanced(avl));
 }
 
 void test_avl(void) {
-    print_test_tree(avl_insert);
-    //print_balancing();
-
-
-//    // Test random values
-//    struct List *input = get_singleton(0);
-//    input = append(input, get_singleton(1));
-//    input = append(input, get_singleton(2));
-//    input = append(input, get_singleton(5));
-//    input = append(input, get_singleton(5));
-//    input = append(input, get_singleton(9));
-//    input = append(input, get_singleton(1));
-//    input = append(input, get_singleton(4));
-//    input = append(input, get_singleton(0));
-//
-//    struct List *solution = get_singleton(0);
-//    solution = append(solution, get_singleton(1));
-//    solution = append(solution, get_singleton(2));
-//    solution = append(solution, get_singleton(4));
-//    solution = append(solution, get_singleton(5));
-//    solution = append(solution, get_singleton(9));
-//
-//    struct Tree *tree = load(empty(), input);
-//    struct List *output = inorder(tree, get_empty_list());
-//    TEST_ASSERT_TRUE(check_list_equality(solution, output));
-//
-//    // Tests ascending values
-//    input = get_singleton(0);
-//    input = append(input, get_singleton(1));
-//    input = append(input, get_singleton(2));
-//    input = append(input, get_singleton(3));
-//    input = append(input, get_singleton(4));
-//
-//    solution = get_singleton(0);
-//    solution = append(solution, get_singleton(1));
-//    solution = append(solution, get_singleton(2));
-//    solution = append(solution, get_singleton(3));
-//    solution = append(solution, get_singleton(4));
-//
-//    tree = load(empty(), input);
-//    output = inorder(tree, get_empty_list());
-//    TEST_ASSERT_TRUE(check_list_equality(solution, output));
-//
-//    // Tests descending values
-//    input = get_singleton(4);
-//    input = append(input, get_singleton(3));
-//    input = append(input, get_singleton(2));
-//    input = append(input, get_singleton(1));
-//    input = append(input, get_singleton(0));
-//
-//    solution = get_singleton(0);
-//    solution = append(solution, get_singleton(1));
-//    solution = append(solution, get_singleton(2));
-//    solution = append(solution, get_singleton(3));
-//    solution = append(solution, get_singleton(4));
-//
-//    tree = load(empty(), input);
-//    output = inorder(tree, get_empty_list());
-//    TEST_ASSERT_TRUE(check_list_equality(solution, output));
+    test_balancing();
+    test_balance_undo();
+    test_exercise_tree();
 }

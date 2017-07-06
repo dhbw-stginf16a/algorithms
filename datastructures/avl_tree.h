@@ -1,8 +1,6 @@
-struct List *append(struct List *left, struct List *right);
-struct List *get_singleton(int value);
-struct Tree *load(struct Tree *root, struct List *list);
-struct List *inorder(struct Tree *root, struct List *list);
-void print_list(struct List *list);
-struct Tree *empty();
-struct List *get_empty_list();
-int check_list_equality(struct List *left, struct List *right);
+struct Tree *avl_insert(struct Tree *root, int value);
+struct Tree *balance_ll(struct Tree *root);
+struct Tree *balance_rl(struct Tree *root);
+struct Tree *balance_lr(struct Tree *root);
+struct Tree *balance_rr(struct Tree *root);
+int is_balanced(struct Tree *root);
