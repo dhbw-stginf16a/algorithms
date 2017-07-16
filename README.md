@@ -28,6 +28,7 @@ To print the AVL Tree exercise output execute `make avl && ./avl.out`.
   - [x] Merge Sort
     - [x] Natural
     - [x] Recursive
+  - [x] Heap Sort
 - [ ] Searching
   - [ ] Linear Search
   - [ ] Binary Search
@@ -46,3 +47,4 @@ To print the AVL Tree exercise output execute `make avl && ./avl.out`.
 - [ ] Binary Tree
   - [ ] Search Tree
   - [ ] Algebraic Tree
+- [x] Heap (Test is Heap Sort Test)

@@ -7,6 +7,7 @@
 #include "../sorting/bubblesort.h"
 #include "../sorting/quicksort.h"
 #include "../sorting/mergesort.h"
+#include "../sorting/heapsort.h"
 
 #define SIZE 100
 
@@ -47,4 +48,8 @@ void test_natural_mergesort(void) {
 
 void test_recursive_mergesort(void) {
     test_sort(&recursive_mergesort);
+}
+
+void test_heapsort(void) {
+	test_sort(&heapSort);
 }

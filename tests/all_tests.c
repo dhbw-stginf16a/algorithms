@@ -30,6 +30,8 @@ int main(void) {
     //RUN_TEST(test_bruteforce_match);
     //RUN_TEST(test_boyermoore_match);
 
+    RUN_TEST(test_heapsort);
+
     RUN_TEST(test_fact);
 
     RUN_TEST(test_avl);

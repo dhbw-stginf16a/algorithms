@@ -2,6 +2,8 @@
  * This is a stack of signed integers
  * Implemented by Daniel Rutz
  */
+#include <stddef.h>
+
 typedef struct stack
 {
 	int* integers;

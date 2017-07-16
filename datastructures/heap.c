@@ -1,59 +1,99 @@
-int insert(int a[], int item, int n) {
-    int last, i , parent;
-    last = a[0];  // index is last stored in 0th element of array
-    if (!full(a, n)) {  // not full
-        i = a[0] = last + 1;
-        parent = i / 2;
-        while (parent > 0 && a[parent] < item) {
-            a[i] = a[parent];
-            i = parent;
-            parent /= 2;
-        }
-        a[i] = item;
-        return 1;  // insertion ok
-    } else {
-        return 0;  // false, heap is full
-    }
+#include <stdlib.h>
+#include <stdio.h>
+
+#include "heap.h"
+#include "../lib/array.h"
+
+//needed for inserting
+void sortUpwards(Heap* heap, int currentIndex)
+{
+	if (!heap || currentIndex <= 1 || currentIndex > heap->size)
+	{
+		return;
+	}
+	
+	//sort the element upwards inside the tree if next element is smaller
+	if (heap->heapArr[currentIndex / 2] < heap->heapArr[currentIndex])
+	{
+		swap(heap->heapArr, currentIndex, currentIndex / 2);
+		sortUpwards(heap, currentIndex / 2);
+	}
 }
 
-int delete(int a[], int n) {
-    int last, i highest, swapped;
-    last = a[0];  // index is last stored in 0th element of array
-    if (!empty(a)) {  // not empty
-        i = 2;
-        swapped = 1;
-        while () {
-            if (i < last - 1 && a[i + 1] > a[k]) {
-                i++;
-            }
-            if (a[i] > a[last]) {
-                a[i / 2] = a[i];
-                i *= 2;
-            } else {
-                swapped = 0;  // false
-            }
-        }
-        a[i / 2] = a[last];
-        a[0]--;
-        return 1;  // true, a[1] deleted
-    } else {
-        return 0;  // false, heap empty
-    }
+//needed for deleting
+void sortDownwards(Heap* heap, int currentIndex)
+{
+	if (currentIndex * 2 > heap->lastElem)
+	{
+		return;
+	}
 
+	if ((heap->heapArr[currentIndex] < heap->heapArr[currentIndex * 2]) && (heap->heapArr[currentIndex * 2] >= heap->heapArr[currentIndex * 2 + 1]))
+	{
+		swap(heap->heapArr, currentIndex, currentIndex * 2);
+		sortDownwards(heap, currentIndex * 2);
+	}
+	else if (heap->heapArr[currentIndex] < heap->heapArr[currentIndex * 2 + 1])
+	{
+		swap(heap->heapArr, currentIndex, currentIndex * 2 + 1);
+		sortDownwards(heap, currentIndex * 2 + 1);
+	}
 }
 
-int maximum(int a[]) {
-    return (a[0] > 0) ? a[1] : -9999;
+
+//initializes new heap, allocates memory
+Heap* createHeap(size_t size)
+{
+	Heap* temp = malloc(sizeof(Heap));
+	temp->heapArr = calloc(size + 1, sizeof(int));
+	temp->lastElem = 0;
+	temp->size = size;
+	
 }
 
-int empty(int a[]) {
-    a[0] == 0;
+//inserts element into heap by inserting as new last element and sorting it upwards
+void insertInHeap(Heap* heapToInsert, int value)
+{
+	if (heapToInsert->lastElem >= (int) heapToInsert->size)
+	{
+		return;
+	}
+
+	heapToInsert->heapArr[++heapToInsert->lastElem] = value;
+	sortUpwards(heapToInsert, heapToInsert->lastElem);
 }
 
-int full(int a[], intn) {
-    return a[0] == n - 1;
+//in a heap, the maximum is always the root node
+int maximumValue(Heap* heap)
+{
+	return heap->heapArr[1];
 }
 
-void init(int a[]) {
-    a[0] = 0; // initially empty
+void deleteMaximumElem(Heap* heap)
+{
+	if (heap->lastElem < 1)
+	{
+		return;
+	}
+	//move last element to top and sort it down
+	heap->heapArr[1] = heap->heapArr[heap->lastElem];
+	--heap->lastElem;
+	sortDownwards(heap, 1);
+}
+
+void destroyHeap(Heap* heap)
+{
+	free(heap->heapArr);
+	free(heap);
+}
+
+void printHeapArray(Heap* heap)
+{
+	int i;
+	printf("HEAP: ");
+	for (i = 1; i <= heap->lastElem; i++)
+	{
+		printf("%d ", heap->heapArr[i]);
+	}
+	printf("\n");
 }

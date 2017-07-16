@@ -9,3 +9,5 @@ void test_first_quicksort(void);
 
 void test_natural_mergesort(void);
 void test_recursive_mergesort(void);
+
+void test_heapsort(void);
