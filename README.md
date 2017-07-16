@@ -35,7 +35,7 @@ To print the AVL Tree exercise output execute `make avl && ./avl.out`.
 - [ ] Pattern Matching
 - [ ] Tries
 - [ ] Huffman Coding
-- [ ] Stack
+- [x] Stack
 - [ ] Queue
 - [ ] Linear Linked List
   - [ ] Ordered Linked List

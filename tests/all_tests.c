@@ -5,6 +5,7 @@
 #include "test_factorial.h"
 #include "test_search.h"
 #include "test_trees.h"
+#include "test_stack.h"
 
 int main(void) {
     UNITY_BEGIN();
@@ -32,6 +33,8 @@ int main(void) {
     RUN_TEST(test_fact);
 
     RUN_TEST(test_avl);
+
+    RUN_TEST(test_stack);
 
     return UNITY_END();
 }
